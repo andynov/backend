@@ -4,7 +4,7 @@ class ProductManager {
     static lastId = 0;
     
     constructor(path){
-        this.products = [];
+        this.arrayProducts = [];
         this.path = path;
     }
     
@@ -16,7 +16,7 @@ class ProductManager {
             return;
         }
 
-        if(this.products.some(item => item.code === code)){
+        if(this.arrayProducts.some(item => item.code === code)){
             console.log("El código se repite. Intenta generar otro código, por favor.");
             return;
         }
@@ -31,13 +31,13 @@ class ProductManager {
             stock
         }
 
-        this.products.push(newProduct);
+        this.arrayProducts.push(newProduct);
 
-        await this.saveProduct(this.products);
+        await this.saveProduct(this.arrayProducts);
     }
 
     getProducts(){
-        console.log(this.products);
+        console.log(this.arrayProducts);
     }
 
     async getProductById(id){

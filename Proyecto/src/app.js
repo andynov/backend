@@ -8,10 +8,6 @@ const app = express();
 
 const PUERTO = 8080;
 
-app.get("/", (req, res) =>{
-    res.send(products)
-})
-
 
 // Limitar el número de elementos del array y mostrarlo:
 
