@@ -1,0 +1,92 @@
+[
+    {
+      "id": 1,
+      "title": "Guitarra Eléctrica Epiphone 335",
+      "description": "Guitarra utilizada en el Jazz, con diapasón de ébano y micrófonos dobles",
+      "price": 1300000,
+      "thumbnail": "https://static.wixstatic.com/media/b98594_0523eb17c04f4247ad03d3fa71234b9e.jpg/v1/fill/w_560,h_678,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/b98594_0523eb17c04f4247ad03d3fa71234b9e.jpg",
+      "code": "abc123",
+      "stock": 3
+    },
+    {
+      "id": 2,
+      "title": "Saxofón tenor Parquer",
+      "description": "Saxofón Tenor de estudio, ideal para iniciarse en el instrumento",
+      "price": 900000,
+      "thumbnail": "https://solomusica.com.ar/sm2020/8612-home_default/saxo-tenor-ocean-ots190.jpg",
+      "code": "abc124",
+      "stock": 5
+    },
+    {
+      "id": 3,
+      "title": "Trompeta Stagg",
+      "description": "Trompeta marca Stagg, made in Germany, con sordina y estuche rígido",
+      "price": 1000000,
+      "thumbnail": "https://boutiquedevientos.com.ar/wp-content/uploads/2021/11/BE110-1-0-trompeta-new-standar-110-sib-besson-towsa.jpg",
+      "code": "abc125",
+      "stock": 3
+    },
+    {
+      "id": 4,
+      "title": "Flauta traversa Yamaha",
+      "description": "Flauta traversa Yamaha, para nivel profesional, con zapatillado nuevo",
+      "price": 950000,
+      "thumbnail": "https://bairesrocks.vteximg.com.br/arquivos/ids/213690/783432-MLA42373477374_062020-F.jpg?v=637313854199830000",
+      "code": "abc126",
+      "stock": 6
+    },
+    {
+      "id": 5,
+      "title": "Armónica cromática Hohner",
+      "description": "Armónica cromática Hohner, dos octavas, recomendada para uso profesional",
+      "price": 700000,
+      "thumbnail": "https://mla-s1-p.mlstatic.com/927672-MLA42317201980_062020-F.jpg",
+      "code": "abc127",
+      "stock": 2
+    },
+    {
+      "id": 6,
+      "title": "Guitarra Eléctrica Gibson Les Paul",
+      "description": "Guitarra legendaria utilizada por Slash y Jimmy Page, entre otros",
+      "price": 1200000,
+      "thumbnail": "https://mla-s1-p.mlstatic.com/927672-MLA42317201980_062020-F.jpg",
+      "code": "abc128",
+      "stock": 4
+    },
+    {
+      "id": 7,
+      "title": "Guitarra Clásica de Luthier",
+      "description": "Guitarra Clásica, Luthier Yacopi, con madera Pino de Abeto Alemán y aros de Algarrobo",
+      "price": 2000000,
+      "thumbnail": "https://veerkamponline.com/cdn/shop/products/7000430.jpg?v=1663785856",
+      "code": "abc129",
+      "stock": 5
+    }, 
+    {
+      "id": 8,
+      "title": "Redoblante Pearl",
+      "description": "Redoblante Pearl, made in USA, sonido vibrante, con parche Remo",
+      "price": 300000,
+      "thumbnail": "https://www.heavenimagenes.com/heavencommerce/3c566556-ab46-4238-9c3a-3568f6af6c1b/images/v2/PEARL/10659_medium.jpg",
+      "code": "abc130",
+      "stock": 1
+    }, 
+    {
+      "id": 9,
+      "title": "Conga LP",
+      "description": "Conga LP, made in Germany, parche Remo, sonido agudo",
+      "price": 200000,
+      "thumbnail": "https://www.heavenimagenes.com/heavencommerce/b23e72e1-40ba-4adb-9dc3-7ee3d3a63b35/images/v2/LATIN%20PERCUSSION/1410221225336095_01_medium.jpg",
+      "code": "abc131",
+      "stock": 4
+    }, 
+    {
+      "id": 10,
+      "title": "Clarinete Buffet Crampton",
+      "description": "Clarinete en Sib, sonido único de la famosa marca parisina",
+      "price": 1500000,
+      "thumbnail": "https://boutiquedevientos.com.ar/wp-content/uploads/2022/07/BC1160L-2-0P-clarinete-divine-sib-buffet-crampon-towsa.jpg",
+      "code": "abc132",
+      "stock": 1
+    }
+  ]
