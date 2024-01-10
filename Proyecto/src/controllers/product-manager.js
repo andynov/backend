@@ -6,12 +6,16 @@ class ProductManager {
     constructor(path){
         this.arrayProducts = [];
         this.path = path;
-    }
-    
-    async addProduct(newObject) {
-        let {title, description, price, thumbnail, code, stock} = newObject;
 
-        if(!title || !description || !price || !thumbnail || !code || !stock){
+        this.getProducts();
+    }
+
+
+
+    async addProduct(newObject) {
+        const {title, description, price, thumbnail, code, stock, category} = newObject;
+
+        if(!title || !description || !price || !code || !stock || !category){
             console.log("Completa todos los campos, por favor.");
             return;
         }
@@ -25,19 +29,29 @@ class ProductManager {
             id: ++ProductManager.lastId,
             title,
             description,
-            price,
-            thumbnail,
             code,
-            stock
+            price,
+            status: true,
+            stock,
+            category,
+            thumbnail,
         }
 
         this.arrayProducts.push(newProduct);
 
         await this.saveProduct(this.arrayProducts);
+
+        return newProduct;
     }
 
-    getProducts(){
-        console.log(this.arrayProducts);
+    async getProducts(){
+        try{
+            const arrayProducts = await this.readProduct();
+            return arrayProducts;
+        }
+        catch (error){
+            console.log("Error reading file", error);
+        }
     }
 
     async getProductById(id){
@@ -45,9 +59,9 @@ class ProductManager {
             const arrayProducts = await this.readProduct();
             const searched = arrayProducts.find(item => item.id === id);
             if (!searched) {
-                console.log("No hemos encontrado el producto.")
+                console.log("Don't find the product")
             } else {
-                console.log("Hemos encontrado el producto");
+                console.log("we find the product");
                 return searched;
             }
 
@@ -74,18 +88,27 @@ class ProductManager {
             }
     }
 
-    async updateProduct(id, productUpdated) {
+    async updateProduct(id, productUpdatedData) {
         try{
             const arrayProducts = await this.readProduct();
             const index = arrayProducts.findIndex(item => item.id === id);
             if (index !== -1) {
+                const existingProduct = arrayProducts[index];
+                
+                const productUpdated = {
+                    ...existingProduct,
+                    ...productUpdatedData,
+                    id: existingProduct.id};
+
                 arrayProducts.splice(index, 1, productUpdated);
                 await this.saveProduct(arrayProducts);
+                return productUpdated;
+                
             } else{
-                console.log("No se encontró el producto");
+                console.log("Don't find the product");
             }
         } catch(error){
-            console.log("Error al actualizar el producto", error);
+            console.log("Error updating the product", error);
         }
     }
 
@@ -97,10 +120,10 @@ class ProductManager {
                 arrayProducts.splice(index, 1);
                 await this.saveProduct(arrayProducts);
             } else{
-                console.log("No se encontró el producto");
+                console.log("Don't find the product");
             }
         } catch(error){
-            console.log("Error al borrar el producto", error);
+            console.log("Error deletting the product", error);
         }
     }
 }
