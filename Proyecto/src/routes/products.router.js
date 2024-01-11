@@ -64,9 +64,8 @@ router.post("/products", async (req, res) =>{
 
 router.put("/products/:pid", async (req, res) =>{
     const pid = req.params.pid;
-    const {title, description, price, thumbnail, code, stock, category} = req.body;
     try{
-        const productUpdated = await productManager.updateProduct(parseInt(pid), {title, description, price, thumbnail, code, stock, category});
+        const productUpdated = await productManager.updateProduct(parseInt(pid), req.body);
         res.json(productUpdated)
     } catch(error){
         console.error("Error updating Product", error);

@@ -20,13 +20,15 @@ class ProductManager {
             return;
         }
 
+        this.arrayProducts = await this.readProduct();
+
         if(this.arrayProducts.some(item => item.code === code)){
             console.log("El código se repite. Intenta generar otro código, por favor.");
             return;
         }
 
         const newProduct = {
-            id: ++ProductManager.lastId,
+            id: this.arrayProducts[this.arrayProducts.length-1].id + 1,
             title,
             description,
             code,
@@ -96,9 +98,15 @@ class ProductManager {
                 const existingProduct = arrayProducts[index];
                 
                 const productUpdated = {
-                    ...existingProduct,
-                    ...productUpdatedData,
-                    id: existingProduct.id};
+                    id: existingProduct.id,
+                    title: productUpdatedData.title?productUpdatedData.title:existingProduct.title,
+                    description: productUpdatedData.description?productUpdatedData.description:existingProduct.description,
+                    code: productUpdatedData.code?productUpdatedData.code:existingProduct.code,
+                    price: productUpdatedData.price?productUpdatedData.price:existingProduct.price,
+                    status: productUpdatedData.status?productUpdatedData.status:existingProduct.status,
+                    stock: productUpdatedData.stock?productUpdatedData.stock:existingProduct.stock,
+                    category: productUpdatedData.category?productUpdatedData.category:existingProduct.category
+            };
 
                 arrayProducts.splice(index, 1, productUpdated);
                 await this.saveProduct(arrayProducts);
