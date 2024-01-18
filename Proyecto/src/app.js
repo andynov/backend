@@ -23,7 +23,7 @@ app.set("views", "./src/views");
 // ROUTES
 app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
-app.use("/api", viewsRouter);
+app.use("/", viewsRouter);
 
 const server = app.listen(PUERTO, () =>{
     console.log(`Escuchando en http://localhost:${PUERTO}`)
