@@ -25,22 +25,20 @@ app.use("/api", productsRouter);
 app.use("/api", cartsRouter);
 app.use("/api", viewsRouter);
 
+const server = app.listen(PUERTO, () =>{
+    console.log(`Escuchando en http://localhost:${PUERTO}`)
+});
+
 // SOCKET
 
 const ProductManager = require("./controllers/product-manager.js");
 const productManager = new ProductManager("./src/models/products.json");
 
-const server = app.listen(PUERTO, () =>{
-    console.log(`Escuchando en http://localhost:${PUERTO}`)
-});
-
 const io = socket(server);
 
 
-
-
 io.on("connection", async (socket) => {
-    console.log("Nuevo cliente conectado");
+    console.log("New client connected");
 
 
     socket.emit("products", await productManager.getProducts());
@@ -49,10 +47,10 @@ io.on("connection", async (socket) => {
         await productManager.deleteProduct(id);
         io.sockets.emit("products", await productManager.getProducts());
     });
-});
 
-socket.on("addProduct", async (product) => {
-    await productManager.addProduct(product);
-    io.sockets.emit("products", await productManager.getProducts());
+    socket.on("addProduct", async (product) => {
+        await productManager.addProduct(product);
+        io.sockets.emit("products", await productManager.getProducts());
+    });
 });
 
