@@ -1,49 +1,40 @@
-const socket = io();
+ const socket = io(); 
+ 
+let user; 
+const chatBox = document.getElementById("chatBox");
 
-socket.on("products", (data) => {
-    renderProducts(data);
-});
+Swal.fire({
+    title: "Identificate", 
+    input: "text",
+    text: "Ingresa un usuario para identificarte en el chat", 
+    inputValidator: (value) => {
+        return !value && "Necesitas escribir un nombre para continuar"
+    }, 
+    allowOutsideClick: false,
+}).then( result => {
+    user = result.value;
+})
 
-const renderProducts = (products) => {
-    const containerProducts = document.getElementById("containerProducts");
-    containerProducts.innerHTML = "";
 
-    products.forEach(item => {
-        const card = document.createElement("div");
-        card.classList.add("card"); 
-        card.innerHTML = `
-                <p>Id ${item.id} </p>
-                <p>Titulo ${item.title} </p>
-                <p>Precio ${item.price} </p>
-                <button> Delete Product </button>
-        `;
-        containerProducts.appendChild(card);
+chatBox.addEventListener("keyup", (event) => {
+    if(event.key === "Enter") {
+        if(chatBox.value.trim().length > 0) {
 
-        card.querySelector("button").addEventListener("click", () => {
-            deleteProduct(item.id);
-        });
-    });
-}
+            socket.emit("message", {user: user, message: chatBox.value}); 
+            chatBox.value = "";
+        }
+    }
+})
 
-const deleteProduct = (id) => {
-    socket.emit("deleteProduct", id);
-}
 
-document.getElementById("btnSubmit").addEventListener("click", () => {
-    addProduct();
-});
 
-const addProduct = () => {
-    const product = {
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        price: document.getElementById("price").value,
-        thumbnail: document.getElementById("thumbnail").value,
-        code: document.getElementById("code").value,
-        stock: document.getElementById("stock").value,
-        category: document.getElementById("category").value,
-        status: document.getElementById("status").value === "true"
-    };
-    
-    socket.emit("addProduct", product);
-};
+socket.on("message", data => {
+    let log = document.getElementById("messagesLogs");
+    let messages = "";
+
+    data.forEach( message => {
+        messages = messages + `${message.user} dice: ${message.message} <br>`
+    })
+
+    log.innerHTML = messages;
+})

@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const ProductManager = require("../controllers/product-manager.js");
-const productManager = new ProductManager("./src/models/products.json");
+const ProductManager = require("../dao/db/product-manager-db.js");
+const productManager = new ProductManager( );
 
 // Routing:
 
@@ -11,12 +11,12 @@ const productManager = new ProductManager("./src/models/products.json");
 router.get("/products", async (req, res) => {
     try{
         const limit = req.query.limit;
-        const arrayProducts = await productManager.getProducts();
+        const products = await productManager.getProducts();
 
         if (limit) {
-            res.json (arrayProducts.slice(0, limit));
+            res.json (products.slice(0, limit));
         } else{
-            res.json(arrayProducts);
+            res.json(products);
         }
 
     } catch(error) {
@@ -29,10 +29,10 @@ router.get("/products", async (req, res) => {
 
 router.get("/products/:pid", async (req, res) => {
     
-    const pid = req.params.pid
+    const id = req.params.pid
 
     try{
-        const product = await productManager.getProductById(parseInt(pid));
+        const product = await productManager.getProductById(id);
 
         if (!product) {
             res.json({error: "Don't get the product"});
@@ -49,11 +49,11 @@ router.get("/products/:pid", async (req, res) => {
 // Add product from POST:
 
 router.post("/products", async (req, res) =>{
+    const newProduct = req.body;
     try{
-        const newProductData = req.body;
-        const newProduct = await productManager.addProduct(newProductData);
-        res.json(newProduct);
-
+        await productManager.addProduct(newProduct);
+        res.status(201).json({
+            message: "Product added sucessfully"});
     } catch(error) {
         console.error("Error adding Product to cart", error)
         res.status(500).json({error: "Internal error server"});
@@ -63,10 +63,12 @@ router.post("/products", async (req, res) =>{
 // Update Product field:
 
 router.put("/products/:pid", async (req, res) =>{
-    const pid = req.params.pid;
+    const id = req.params.pid;
+    const productUpdated = req.body;
     try{
-        const productUpdated = await productManager.updateProduct(parseInt(pid), req.body);
-        res.json(productUpdated)
+        await productManager.updateProduct(id, productUpdated);
+        res.status(201).json({
+            message: "Product update succesfully"});
     } catch(error){
         console.error("Error updating Product", error);
         res.status(500).json({error: "Internal Server Error"})
@@ -76,10 +78,12 @@ router.put("/products/:pid", async (req, res) =>{
 // Delete Product:
 
 router.delete("/products/:pid", async (req, res) =>{
-    const {pid} = req.params;
+    const id = req.params.pid;
     try{
-        await productManager.deleteProduct(parseInt(pid));
-        res.send("Successful deletion")
+        await productManager.deleteProduct(id);
+        res.json({
+            message: "Product deleted succesfully"
+        })
     } catch(error){
         console.error("Error deleting Product", error);
         res.status(500).json({error: "Internal Server Error"})
