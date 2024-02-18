@@ -125,7 +125,8 @@ class ProductManager {
             }
             console.log("Product deleted succesfully");
         } catch (error) {
-            console.log("Error deleting product", error)
+            console.log("Error deleting product", error);
+            throw error;
         }
     }
 }

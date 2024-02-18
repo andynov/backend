@@ -17,7 +17,7 @@ router.post("/carts", async (req, res) =>{
     }
 })
 
-router.get("/:cid", async (req, res) => {
+router.get("/carts/:cid", async (req, res) => {
     const cartId = req.params.cid;
 
     try {
@@ -35,7 +35,7 @@ router.get("/:cid", async (req, res) => {
     }
 });
 
-router.post("/carts/:cid/product/:pid", async (req, res) => {
+router.post("/carts/:cid/products/:pid", async (req, res) => {
     const cartId = req.params.cid;
     const productId = req.params.pid;
     const quantity = req.body.quantity || 1;
@@ -51,7 +51,7 @@ router.post("/carts/:cid/product/:pid", async (req, res) => {
 })
 
 
-router.delete('/:cid/product/:pid', async (req, res) => {
+router.delete('/carts/:cid/products/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
@@ -73,7 +73,7 @@ router.delete('/:cid/product/:pid', async (req, res) => {
 });
 
 
-router.put('/:cid', async (req, res) => {
+router.put('/carts/:cid', async (req, res) => {
     const cartId = req.params.cid;
     const updatedProducts = req.body;
 
@@ -90,7 +90,7 @@ router.put('/:cid', async (req, res) => {
 });
 
 
-router.put('/:cid/product/:pid', async (req, res) => {
+router.put('/carts/:cid/products/:pid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const productId = req.params.pid;
@@ -112,7 +112,7 @@ router.put('/:cid/product/:pid', async (req, res) => {
     }
 });
 
-router.delete('/:cid', async (req, res) => {
+router.delete('/carts/:cid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         

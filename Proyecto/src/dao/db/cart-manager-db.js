@@ -55,7 +55,7 @@ class CartManager {
             }
 
 
-            cart.products = cart.products.filter(item => item.product.toString() !== productId);
+            cart.products = cart.products.filter(item => item.product._id.toString() !== productId);
 
             await cart.save();
             return cart;
@@ -94,7 +94,7 @@ class CartManager {
                 throw new Error("Cart didn't find");
             }
 
-            const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
+            const productIndex = cart.products.findIndex(item => item.product._id.toString() === productId);
 
             if (productIndex !== -1) {
                 cart.products[productIndex].quantity = newQuantity;

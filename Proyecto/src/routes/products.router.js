@@ -40,7 +40,7 @@ router.get("/products", async (req, res) => {
 });
 
 
-router.get("/:pid", async (req, res) => {
+router.get("/products/:pid", async (req, res) => {
     const id = req.params.pid;
 
     try {
@@ -61,7 +61,7 @@ router.get("/:pid", async (req, res) => {
 });
 
 
-router.post("/", async (req, res) => {
+router.post("/products", async (req, res) => {
     const newProduct = req.body;
 
     try {
@@ -78,7 +78,7 @@ router.post("/", async (req, res) => {
 });
 
 
-router.put("/:pid", async (req, res) => {
+router.put("/products/:pid", async (req, res) => {
     const id = req.params.pid;
     const productUpdated = req.body;
 
@@ -96,7 +96,7 @@ router.put("/:pid", async (req, res) => {
 });
  
 
-router.delete("/:pid", async (req, res) => {
+router.delete("/products/:pid", async (req, res) => {
     const id = req.params.pid;
 
     try {
