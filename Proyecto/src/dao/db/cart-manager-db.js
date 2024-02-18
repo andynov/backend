@@ -1,4 +1,4 @@
-const CartModel = require("../models/cart.model");
+const CartModel = require("../models/cart.model.js");
 
 class CartManager {
 
@@ -43,6 +43,92 @@ class CartManager {
         } catch (error) {
             console.log("Error adding product to cart", error)
 
+        }
+    }
+
+    async deleteProductCart(cartId, productId) {
+        try {
+            const cart = await CartModel.findById(cartId);
+
+            if (!cart) {
+                throw new Error("Cart didn't find");
+            }
+
+
+            cart.products = cart.products.filter(item => item.product.toString() !== productId);
+
+            await cart.save();
+            return cart;
+
+        } catch (error) {
+            console.error('Error deleting product in cart', error);
+            throw error;
+        }
+    }
+
+    async updateCart(cartId, updatedProducts) {
+        try {
+            const cart = await CartModel.findById(cartId);
+
+            if (!cart) {
+                throw new Error("Cart didn't find");
+            }
+
+            cart.products = updatedProducts;
+
+            cart.markModified('products');
+            await cart.save();
+            return cart;
+
+        } catch (error) {
+            console.error('Error updating cart', error);
+            throw error;
+        }
+    }
+
+    async updateProductQuantity(cartId, productId, newQuantity) {
+        try {
+            const cart = await CartModel.findById(cartId);
+
+            if (!cart) {
+                throw new Error("Cart didn't find");
+            }
+
+            const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
+
+            if (productIndex !== -1) {
+                cart.products[productIndex].quantity = newQuantity;
+
+
+                cart.markModified('products');
+
+                await cart.save();
+                return cart;
+            } else {
+                throw new Error("Product didn't find in the cart");
+            }
+        } catch (error) {
+            console.error('Error updating quantity product in cart', error);
+            throw error;
+        }
+    }
+
+    async emptyCart(cartId) {
+        try {
+            const cart = await CartModel.findByIdAndUpdate(
+                cartId,
+                { products: [] },
+                { new: true }
+            );
+
+            if (!cart) {
+                throw new Error("Cart didn't find");
+            }
+
+            return cart;
+        } catch (error) {
+            console.error('Error emptying cart', error);
+            throw error;
         }
     }
 }
