@@ -16,7 +16,7 @@ router.post("/", passport.authenticate("register", {
 
     req.session.login = true;
 
-    res.redirect("/profile");
+    res.redirect("/products");
 })
 
 router.get("/failedregister", (req, res) => {
