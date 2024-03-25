@@ -4,12 +4,12 @@ const local = require("passport-local");
 const UserModel = require("../dao/models/user.model.js");
 const { createHash, isValidPassword } = require("../utils/hashBcrypt.js");
 
+const LocalStrategy = local.Strategy;
+
 // PASSPORT WITH GITHUB
 const GitHubStrategy = require("passport-github2")
 
-
-
-const LocalStrategy = local.Strategy;
+// PASSPORT REGISTER STRATEGY
 
 const initializePassport = () => {
 
@@ -36,6 +36,8 @@ const initializePassport = () => {
         }
     }))
 
+    // PASSPORT LOGIN STRATEGY
+
     passport.use("login", new LocalStrategy({
         usernameField: "email"
     }, async (email, password, done) => {
@@ -53,6 +55,8 @@ const initializePassport = () => {
         }
     }))
 
+// PASSPORT SERIALIZER & DESERIALIZER
+
     passport.serializeUser((user, done) => {
         done(null, user._id);
     });
@@ -61,6 +65,8 @@ const initializePassport = () => {
         let user = await UserModel.findById({_id: id});
         done(null, user);
     })
+
+// PASSPORT GITHUB STRATEGY
 
     passport.use("github", new GitHubStrategy({
         clientID: "Iv1.176a0e0cf8a07022",

@@ -5,6 +5,37 @@ const CartManager = require("../dao/db/cart-manager-db.js");
 const productManager = new ProductManager();
 const cartManager = new CartManager();
 
+router.get("/login", (req, res) => {
+   if (req.session.login) {
+       return res.redirect("/products");
+   }
+
+   res.render("login");
+});
+
+router.get("/register", (req, res) => {
+   if (req.session.login) {
+       return res.redirect("/profile");
+   }
+   res.render("register");
+});
+
+router.get("/profile", (req, res) => {
+   if (req.session.login) {
+      res.render("profile", { user: req.session.user });
+   } else {
+      res.redirect("/login");
+   }
+});
+
+router.get("/", (req, res) => {
+   if (req.session.login) {
+       return res.redirect("/products");
+   }
+
+   res.render("login");
+});
+
 router.get("/products", async (req, res) => {
    try {
       const { page = 1, limit = 2 } = req.query;
@@ -25,7 +56,8 @@ router.get("/products", async (req, res) => {
          prevPage: products.prevPage,
          nextPage: products.nextPage,
          currentPage: products.page,
-         totalPages: products.totalPages
+         totalPages: products.totalPages,
+         user: req.session.user
       });
 
    } catch (error) {
@@ -61,35 +93,6 @@ router.get("/carts/:cid", async (req, res) => {
    }
 });
 
-router.get("/login", (req, res) => {
-   if (req.session.login) {
-       return res.redirect("/products");
-   }
 
-   res.render("login");
-});
-
-router.get("/register", (req, res) => {
-   if (req.session.login) {
-       return res.redirect("/profile");
-   }
-   res.render("register");
-});
-
-router.get("/profile", (req, res) => {
-   if (!req.session.login) {
-       return res.redirect("/login");
-   }
-
-   res.render("profile", { user: req.session.user });
-});
-
-router.get("/", (req, res) => {
-   if (req.session.login) {
-       return res.redirect("/products");
-   }
-
-   res.render("login");
-});
 
 module.exports = router; 
