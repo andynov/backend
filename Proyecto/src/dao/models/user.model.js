@@ -33,14 +33,9 @@ const userSchema = new mongoose.Schema({
     },
     cart: {
             type: mongoose.Schema.Types.ObjectId,
-            ref:"Cart",
+            ref:"carts",
            // required: true
     }
-});
-
-userSchema.pre("findOne", function (next) {
-    this.populate('carts.cart', 'id');
-    next();
 });
 
 const UserModel = mongoose.model("user", userSchema);

@@ -1,10 +1,9 @@
 const passport = require("passport");
 const local = require("passport-local");
-
 const UserModel = require("../dao/models/user.model.js");
 const { createHash, isValidPassword } = require("../utils/hashBcrypt.js");
-
 const LocalStrategy = local.Strategy;
+const CartManager = require("../dao/db/cart-manager-db.js")
 
 // PASSPORT WITH GITHUB
 const GitHubStrategy = require("passport-github2")
@@ -21,12 +20,15 @@ const initializePassport = () => {
         try {
             let user = await UserModel.findOne({ email });
             if( user ) return done(null, false);
+            const cartManager = new CartManager;
+            const newCart = await cartManager .addCart()
             let newUser = {
                 first_name,
                 last_name,
                 email,
                 age,
-                password: createHash(password)
+                password: createHash(password),
+                cart: newCart._id
             }
 
             let result = await UserModel.create(newUser);
