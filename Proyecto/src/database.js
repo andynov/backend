@@ -1,5 +1,7 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const configObject = require("./config/config.js");
+const {mongo_url} = configObject;
 
-mongoose.connect("mongodb+srv://andresnovmusica:coderhouse@cluster0.er55ipy.mongodb.net/ecommerce?retryWrites=true&w=majority")
+mongoose.connect(mongo_url)
     .then(() => console.log("Successful connection") )
     .catch(() => console.log("Connection Error"))
