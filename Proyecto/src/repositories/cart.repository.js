@@ -1,6 +1,6 @@
-const CartModel = require("../../models/cart.model.js");
+const CartModel = require("../models/cart.model.js");
 
-class CartManager {
+class CartRepository {
 
     async addCart() {
         try {
@@ -13,7 +13,7 @@ class CartManager {
         }
     }
 
-    async getCartById(cartId){
+    async getProductsCart(cartId){
         try{
             const cart = await CartModel.findById(cartId);
             if (!cart) {
@@ -133,4 +133,5 @@ class CartManager {
     }
 }
 
-module.exports = CartManager;
+
+module.exports = CartRepository;

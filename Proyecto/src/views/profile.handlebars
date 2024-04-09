@@ -1,5 +1,14 @@
 <h1>My Profile</h1>
 <p>Welcome, {{user.first_name}} {{user.last_name}}!</p>
-<p>Email: {{user.email}}</p>
-<p>Age: {{user.age}}</p>
-<a href="/api/sessions/logout">Logout</a>
+<p>Role: {{user.role}} </p>
+
+<form action="/api/users/logout" method="POST">
+  <button type="submit">Logout</button>
+</form>
+
+{{#if this.isAdmin}}
+  <a href="/realtimeproducts"> Update Products </a>
+{{else}}
+  <a href="/chat"> Live Chat</a>
+  <a href="/products"> E-commerce </a>
+{{/if}}

@@ -1,8 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../dao/db/product-manager-db.js");
-const productManager = new ProductManager( );
+const ProductController = require("../controllers/product.controller.js");
+const productController = new ProductController(); 
 
+router.get("/", productController.getProducts);
+router.get("/:pid", productController.getProductById);
+router.post("/", productController.addProduct);
+router.put("/:pid", productController.updateProduct);
+router.delete("/:pid", productController.deleteProduct);
+
+module.exports = router;
+
+
+/*
 // Routing:
 
 router.get("/products", async (req, res) => {
@@ -112,5 +122,5 @@ router.delete("/products/:pid", async (req, res) => {
         });
     }
 });
+*/
 
-module.exports = router;

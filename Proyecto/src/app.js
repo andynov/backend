@@ -3,11 +3,8 @@ const app = express();
 const PUERTO = 8080;
 const exphbs = require("express-handlebars");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 require("./database.js");
-const MongoStore = require("connect-mongo");
 const userRouter = require("./routes/user.router.js");
-const sessionRouter = require("./routes/sessions.router.js");
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
@@ -19,22 +16,11 @@ const initializePassport = require("./config/passport.config.js");
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static("./src/public"));
+
+// PASSPORT
 app.use(cookieParser());
-
-// PASSPORT LOGIN
-app.use(session({
-    secret: "secretCoder",
-	resave: true,
-	saveUninitialized: true,
-	store: MongoStore.create({
-		mongoUrl: "mongodb+srv://andresnovmusica:coderhouse@cluster0.er55ipy.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0",
-		ttl: 90,
-    })
-}))
-
-initializePassport();
 app.use(passport.initialize());
-app.use(passport.session());
+initializePassport();
 
 // HANDLEBARS
 
@@ -42,12 +28,17 @@ app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
+// AUTHMIDDLEWARE
+const authMiddleware = require("./middleware/authmiddleware.js");
+app.use(authMiddleware);
+
 // ROUTES
-app.use("/api", productsRouter);
-app.use("/api", cartsRouter);
-app.use("/", viewsRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
 app.use("/api/users", userRouter);
-app.use("/api/sessions", sessionRouter);
+app.use("/", viewsRouter);
+
+/*
 
 app.get("/createcookie", (req, res) => {
     res.cookie("cookie", "This is a cookie").send("Cookie created");
@@ -70,7 +61,12 @@ app.get("/user", (req, res) => {
     }
     res.send("We don't have a registered user");
 })
+*/
 
-app.listen(PUERTO, () =>{
-    console.log(`Escuchando en http://localhost:${PUERTO}`)
+const httpServer = app.listen(PUERTO, () =>{
+    console.log(`Listen in http://localhost:${PUERTO}`)
 });
+
+///Websockets: 
+const SocketManager = require("./sockets/socketmanager.js");
+new SocketManager(httpServer);

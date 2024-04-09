@@ -1,11 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const CartManager = require("../dao/db/cart-manager-db.js");
-const cartManager = new CartManager;
-const CartModel = require("../dao/models/cart.model.js");
+const CartController = require("../controllers/cart.controller.js");
+const cartController = new CartController(); 
+
+router.post("/", cartController.newCart);
+router.get("/:cid", cartController.getProductsCart);
+router.post("/:cid/product/:pid", cartController.addProductToCart);
+router.delete('/:cid/product/:pid', cartController.deleteProductCart);
+router.put('/:cid', cartController.updateProductCart);
+router.put('/:cid/product/:pid', cartController.updateQuantity);
+router.delete('/:cid', cartController.emptyCart);
+
+module.exports = router;
 
 // ROUTING
 
+/*
 router.post("/carts", async (req, res) =>{
     try{
         const newCart = await cartManager.addCart();
@@ -132,4 +142,5 @@ router.delete('/carts/:cid', async (req, res) => {
     }
 });
 
-module.exports = router;
+*/
+
