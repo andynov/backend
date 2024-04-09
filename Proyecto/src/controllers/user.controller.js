@@ -20,7 +20,7 @@ class UserController {
                 first_name,
                 last_name,
                 email,
-                cart: nuevoCarrito._id, 
+                cart: newCart._id, 
                 password: createHash(password),
                 age
             });

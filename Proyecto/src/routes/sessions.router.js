@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -40,7 +41,7 @@ router.post("/login", async (req, res) => {
 
 // PASSPORT
 
-
+/*
 
 router.post("/login", passport.authenticate("login", {failureRedirect: "/api/sessions/faillogin"}), async (req, res) => {
     if(!req.user) return res.status(400).send({status: "error", message: "Invalid credentials"});
@@ -81,3 +82,4 @@ router.get("/githubcallback", passport.authenticate("github", {failureRedirect: 
 
 
 module.exports = router;
+*/
