@@ -1,5 +1,10 @@
+const TicketModel = require("../models/ticket.model.js");
+const UserModel = require("../models/user.model.js");
 const CartRepository = require("../repositories/cart.repository.js");
 const cartRepository = new CartRepository();
+const ProductRepository = require("../repositories/product.repository.js");
+const productRepository = new ProductRepository();
+const { generateUniqueCode, calculateTotal } = require("../utils/cartutils.js");
 
 class CartController {
     async newCart(req, res) {
@@ -98,6 +103,47 @@ class CartController {
             res.status(500).send("Error");
         }
     }
+
+    async finishBuy(req, res) {
+        const cartId = req.params.cid;
+        try {
+            const cart = await cartRepository.getProductsCart(cartId);
+            const products = cart.products;
+
+            const productsUnavailables = [];
+
+            for (const item of products) {
+                const productId = item.product;
+                const product = await productRepository.getProductById(productId);
+                if (product.stock >= item.quantity) {
+                    product.stock -= item.quantity;
+                    await product.save();
+                } else {
+                    productsUnavailables.push(productId);
+                }
+            }
+
+            const userWithCart = await UserModel.findOne({ cart: cartId });
+
+            const ticket = new TicketModel({
+                code: generateUniqueCode(),
+                purchase_datetime: new Date(),
+                amount: calculateTotal(cart.products),
+                purchaser: userWithCart._id
+            });
+            await ticket.save();
+
+            cart.products = cart.products.filter(item => productosNoDisponibles.some(productId => productId.equals(item.product)));
+            await cart.save();
+
+            res.status(200).json({ productsUnavailables });
+        } catch (error) {
+            console.error('Error processing buying', error);
+            res.status(500).json({ error: 'Internal Error Server' });
+        }
+    }
+
 }
+
 
 module.exports = CartController;

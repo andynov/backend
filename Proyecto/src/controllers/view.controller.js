@@ -32,14 +32,15 @@ class ViewsController {
             console.log(cartId);
 
             res.render("products", {
-                productos: newArray,
+                products: newArray,
                 hasPrevPage,
                 hasNextPage,
                 prevPage: page > 1 ? parseInt(page) - 1 : null,
                 nextPage: page < totalPages ? parseInt(page) + 1 : null,
                 currentPage: parseInt(page),
                 totalPages,
-                cartId
+                cartId,
+                user: {first_name: req.user.first_name, last_name: req.user.last_name}
             });
 
         } catch (error) {
