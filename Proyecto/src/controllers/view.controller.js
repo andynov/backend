@@ -29,7 +29,6 @@ class ViewsController {
 
             
             const cartId = req.user.cart.toString();
-            console.log(cartId);
 
             res.render("products", {
                 products: newArray,
@@ -62,13 +61,22 @@ class ViewsController {
                 return res.status(404).json({ error: "Cart didn't find" });
             }
 
-            const productsInCart = cart.products.map(item => ({
-                product: item.product.toObject(),
-                quantity: item.quantity
-            }));
+            let totalBuying = 0;
+
+            const productsInCart = cart.products.map(item => {
+                const product = item.product.toObject();
+                const quantity = item.quantity;
+                const totalPrice = product.price * quantity;
+                totalBuying += totalPrice;
+                return {
+                    product: { ...product, totalPrice },
+                    quantity,
+                    cartId
+                };
+            });
 
 
-            res.render("carts", { products: productsInCart });
+            res.render("carts", { products: productsInCart, totalBuying, cartId });
         } catch (error) {
             console.error("Error getting cart", error);
             res.status(500).json({ error: "Internal Error Server" });

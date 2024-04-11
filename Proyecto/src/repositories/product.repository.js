@@ -36,7 +36,7 @@ class ProductRepository {
     }
     }
 
-    async getProducts( {limit = 10, page = 1, sort, query}) {
+    async getProducts( {limit = 10, page = 1, sort, query} = {}) {
         try {
             const skip = (page - 1) * limit;
 

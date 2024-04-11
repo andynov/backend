@@ -38,30 +38,6 @@ app.use("/api/carts", cartsRouter);
 app.use("/api/users", userRouter);
 app.use("/", viewsRouter);
 
-/*
-
-app.get("/createcookie", (req, res) => {
-    res.cookie("cookie", "This is a cookie").send("Cookie created");
-})
-
-app.get("/clearcookie", (req, res) => {
-    res.clearCookie("cookie").send("Cookie cleared");
-});
-
-app.get("/login", (req, res) => {
-    let user = req.query.user; 
-
-    req.session.user = user; 
-    res.send("Saving the user through query");
-})
-
-app.get("/user", (req, res) => {
-    if(req.session.user) {
-        return res.send(`The registered user is: ${req.session.user} `);
-    }
-    res.send("We don't have a registered user");
-})
-*/
 
 const httpServer = app.listen(PUERTO, () =>{
     console.log(`Listen in http://localhost:${PUERTO}`)
