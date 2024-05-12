@@ -136,7 +136,7 @@ class CartController {
             cart.products = cart.products.filter(item => productosNoDisponibles.some(productId => productId.equals(item.product)));
             await cart.save();
 
-            res.status(200).json({ productsUnavailables });
+            res.render("checkout", {ticket: ticket});
         } catch (error) {
             console.error('Error processing buying', error);
             res.status(500).json({ error: 'Internal Error Server' });
