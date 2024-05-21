@@ -2,13 +2,17 @@
 <p>Welcome, {{user.first_name}} {{user.last_name}}!</p>
 <p>Role: {{user.role}} </p>
 
-<form action="/api/users/logout" method="POST">
-  <button type="submit">Logout</button>
-</form>
+	<form action="/api/users/logout" method="POST">
+		<button class="btnMios" type="submit">Logout</button>
+	</form>
 
-{{#if this.isAdmin}}
-  <a href="/realtimeproducts"> Update Products </a>
-{{else}}
-  <a href="/chat"> Live Chat</a>
-  <a href="/products"> E-commerce </a>
-{{/if}}
+	{{#if this.isAdmin}}
+	<a class="btnMios" href="/realtimeproducts">Update Products</a>
+	{{else}}
+	{{#if this.isPremium}}
+	<a class="btnMios" href="/realtimeproducts">Panel Premium</a>
+	{{/if}}
+	<a class="btnMios" href="/chat">Live Chat</a>
+	<a class="btnMios" href="/products">E-commerce</a>
+	{{/if}}
+</div>
