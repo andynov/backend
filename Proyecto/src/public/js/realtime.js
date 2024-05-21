@@ -1,4 +1,6 @@
-const socket = io(); 
+const socket = io();
+const role = document.getElementById("role").textContent;
+const email = document.getElementById("email").textContent;
 
 socket.on("products", (data) => {
     renderProducts(data);
@@ -20,9 +22,18 @@ const renderProducts = (products) => {
                         `;
 
         containerProducts.appendChild(card); 
-        card.querySelector("button").addEventListener("click", ()=> {
-            deleteProduct(item._id);
-        })
+        card.querySelector("button").addEventListener("click", () => {
+            if (role === "premium" && item.owner === email) {
+                deleteProduct(item._id);
+            } else if (role === "admin") {
+                deleteProduct(item._id);
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "You don't have credentials",
+                })
+            }
+        });
     })
 }
 
@@ -38,7 +49,12 @@ document.getElementById("btnSend").addEventListener("click", () => {
 
 
 const addProduct = () => {
+    const role = document.getElementById("role").textContent;
+    const email = document.getElementById("email").textContent;
+    const owner = role === "premium" ? email : "admin";
+
     const product = {
+        
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
         price: document.getElementById("price").value,

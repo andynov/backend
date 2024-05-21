@@ -46,7 +46,7 @@ class CartRepository {
         }
     }
 
-    async deleteProductCart(cartId, productId) {
+    async deleteProduct(cartId, productId) {
         try {
             const cart = await CartModel.findById(cartId);
 

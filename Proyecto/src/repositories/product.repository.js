@@ -3,9 +3,9 @@ const ProductModel = require("../models/product.model.js");
 class ProductRepository {
     async addProduct(newObject) {
         try{
-            const {title, description, prize, img, thumbnails, code, stock, category} = newObject;
+            const {title, description, price, img, thumbnails, code, stock, category} = newObject;
 
-        if(!title || !description || !prize || !code || !stock || !category){
+        if(!title || !description || !price || !code || !stock || !category){
             console.log("Complete all fields, please");
             return;
         }
@@ -21,14 +21,17 @@ class ProductRepository {
             description,
             code,
             img,
-            prize,
+            price,
             status: true,
             stock,
             category,
             thumbnails: thumbnails || [],
+            owner
         });
 
         await newProduct.save();
+
+        return newProduct;
 
     } catch (error) {
         console.log("Error adding product", error);
@@ -91,7 +94,7 @@ class ProductRepository {
                 return null;
             }
 
-            console.log("Product found");
+            console.log("Product founded");
             return product;
 
         } catch (error) {

@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const CartController = require("../controllers/cart.controller.js");
-const cartController = new CartController(); 
+const authMiddleware = require("../middleware/authmiddleware.js");
+const cartController = new CartController();
+
+router.use(authMiddleware);
 
 router.post("/", cartController.newCart);
 router.get("/:cid", cartController.getProductsCart);

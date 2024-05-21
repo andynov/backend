@@ -5,6 +5,8 @@ const cartRepository = new CartRepository();
 const ProductRepository = require("../repositories/product.repository.js");
 const productRepository = new ProductRepository();
 const { generateUniqueCode, calculateTotal } = require("../utils/cartutils.js");
+const EmailManager = require("../services/email.js");
+const emailManager = new EmailManager();
 
 class CartController {
     async newCart(req, res) {
@@ -47,7 +49,7 @@ class CartController {
         const cartId = req.params.cid;
         const productId = req.params.pid;
         try {
-            const updatedCart = await cartRepository.deleteProductCart(cartId, productId);
+            const updatedCart = await cartRepository.deleteProduct(cartId, productId);
             res.json({
                 status: 'success',
                 message: 'Product deleted successfully',
@@ -133,10 +135,17 @@ class CartController {
             });
             await ticket.save();
 
-            cart.products = cart.products.filter(item => productosNoDisponibles.some(productId => productId.equals(item.product)));
+            cart.products = cart.products.filter(item => productsUnavailables.some(productId => productId.equals(item.product)));
             await cart.save();
 
-            res.render("checkout", {ticket: ticket});
+            await emailManager.sendEmailPurchase(userWithCart.email, userWithCart.first_name, ticket._id);
+            
+            res.render("checkout", {
+                client: userWithCart.first_name,
+                email: userWithCart.email,
+                numTicket: ticket._id 
+            });
+
         } catch (error) {
             console.error('Error processing buying', error);
             res.status(500).json({ error: 'Internal Error Server' });

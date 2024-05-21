@@ -20,7 +20,6 @@ const userSchema = mongoose.Schema({
 
     password: {
         type: String,
-        //required: true
     },
 
     age: {
@@ -33,8 +32,12 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'user'],
+        enum: ['admin', 'user', 'premium'],
         default: 'user'
+    },
+    resetToken: {
+        token: String,
+        expiresAt: Date
     }
 });
 
