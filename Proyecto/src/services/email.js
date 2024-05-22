@@ -25,7 +25,7 @@ class EmailManager {
                 `
             };
 
-            await this.transporter.sendEmail(emailOptions);
+            await this.transporter.sendMail(emailOptions);
         } catch (error) {
             console.error('Error sending email', error);
         }
