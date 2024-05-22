@@ -15,6 +15,7 @@ const viewsRouter = require("./routes/views.router.js");
 
 require("./database.js");
 
+
 // MIDDLEWARE
 
 app.use(express.urlencoded({extended: true}));
@@ -51,3 +52,20 @@ const httpServer = app.listen(PUERTO, () =>{
 ///Websockets: 
 const SocketManager = require("./sockets/socketmanager.js");
 new SocketManager(httpServer);
+
+// API DOCUMENTATION - SWAGGER
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUiExpress = require("swagger-ui-express");
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.1",
+        info: {
+            title: "E-commerce Musical Instruments Documentation",
+            description: "Musical Instruments sales"
+        }
+    },
+    apis: ["./src/docs/**/*.yaml"]
+}
+
+const specs = swaggerJSDoc(swaggerOptions);
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
