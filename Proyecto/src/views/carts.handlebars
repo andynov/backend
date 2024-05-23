@@ -1,3 +1,5 @@
+<script src="../public/js/cartfunctions.js"></script>
+
 <h1 class="text-center">Cart</h1>
 
 <div class="container">
@@ -7,7 +9,7 @@
             <h5 class="card-title">Product: {{this.product.title}}</h5>
             <p class="card-text">Quantity: {{this.quantity}}</p>
             <p class="card-text">Price: ${{this.product.totalPrice}}</p>
-            <button onclick="deleteProduct('{{this.cartId}}', '{{this.product._id}}')"
+            <button onclick="deleteCartProduct('{{this.cartId}}', '{{this.product._id}}')"
                 class="btn btn-danger">Delete</button>
         </div>
     </div>

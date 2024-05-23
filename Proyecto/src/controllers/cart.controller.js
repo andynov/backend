@@ -93,7 +93,7 @@ class CartController {
     async emptyCart(req, res) {
         const cartId = req.params.cid;
         try {
-            const updatedCart = await cartRepository.deleteCart(cartId);
+            const updatedCart = await cartRepository.emptyCart(cartId);
 
             res.json({
                 status: 'success',
