@@ -1,0 +1,27 @@
+<navbar class="navbar navbar-expand-lg navhead">
+    <div class="container-fluid">
+        <a href="/"><img src="../../../public/images/logo.svg"
+            alt="Logo" class="widthLogo"></a>
+        <h1>IN CRESCENDO Musical Instruments</h1>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <nav class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav fontsNav ms-auto">
+                {{#if isAuthenticated}} 
+                    <li class="nav-item">
+                        <a href="/api/users/profile">Profile</a>
+                    </li>
+                {{else}}
+                    <li class="nav-item">
+                        <a href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register">Register</a>
+                    </li>
+                {{/if}}
+            </ul>
+        </nav>
+    </div>
+</navbar>
