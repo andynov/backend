@@ -1,4 +1,5 @@
 const CartModel = require("../models/cart.model.js");
+const TicketModel = require("../models/ticket.model.js");
 
 class CartRepository {
 
@@ -26,7 +27,7 @@ class CartRepository {
         }
     }
 
-    async addProductToCart(cartId, productId, quantity = 1) {
+    async addProduct(cartId, productId, quantity = 1) {
         try {
             const cart = await this.getProductsCart(cartId);
             const productExist = cart.products.find(item => item.product._id.toString() === productId);
@@ -41,7 +42,8 @@ class CartRepository {
             return cart;
 
         } catch (error) {
-            console.log("Error adding product to cart", error)
+            console.log("Error adding product to cart", error);
+            throw error;
 
         }
     }
@@ -131,7 +133,23 @@ class CartRepository {
             throw error;
         }
     }
+
+    async addProductsToTicket(products, purchaser) {
+        try {
+            const ticket = new TicketModel({
+                code: generateUniqueCode(),
+                purchase_datetime: new Date(),
+                amount: calculateTotal(products),
+                purchaser
+            });
+            await ticket.save();
+            return ticket;
+        } catch (error) {
+            throw new Error("Error adding Products to Ticket");
+        }
+    }
 }
+
 
 
 module.exports = CartRepository;

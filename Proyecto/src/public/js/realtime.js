@@ -30,7 +30,7 @@ const renderProducts = (products) => {
             } else {
                 Swal.fire({
                     title: "Error",
-                    text: "You don't have credentials",
+                    text: "You don't have credentials to delete this product",
                 })
             }
         });
@@ -63,6 +63,7 @@ const addProduct = () => {
         stock: document.getElementById("stock").value,
         category: document.getElementById("category").value,
         status: document.getElementById("status").value === "true",
+        owner
     };
 
     socket.emit("addProduct", product);

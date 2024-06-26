@@ -1,18 +1,24 @@
-<h1>My Profile</h1>
-<p>Welcome, {{user.first_name}} {{user.last_name}}!</p>
-<p>Role: {{user.role}} </p>
-
-	<form action="/api/users/logout" method="POST">
-		<button class="btnMios" type="submit">Logout</button>
-	</form>
-
-	{{#if this.isAdmin}}
-	<a class="btnMios" href="/realtimeproducts">Update Products</a>
-	{{else}}
-	{{#if this.isPremium}}
-	<a class="btnMios" href="/realtimeproducts">Panel Premium</a>
-	{{/if}}
-	<a class="btnMios" href="/chat">Live Chat</a>
-	<a class="btnMios" href="/products">E-commerce</a>
-	{{/if}}
+<div class="container mt-5 profile">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<h1 class="card-title text-center">My Profile</h1>
+					<p class="text-center">Welcome, {{user.first_name}} {{user.last_name}}!</p>
+					<p class="text-center" style="text-transform: capitalize;">Role: {{user.role}}</p>
+					{{#if this.isAdmin}}
+					<a class="btn btn-primary btn-block btnMios" href="/realtimeproducts">Update Products</a>
+					{{else}}
+					{{#if this.isPremium}}
+					<a class="btn btn-warning btn-block btnMios" href="/realtimeproducts">Panel Premium</a>
+					{{/if}}
+					<a class="btn btn-success btn-block btnMios" href="/products">E-commerce</a>
+					{{/if}}
+					<form action="/api/users/logout" method="POST">
+						<button class="btn btn-danger btn-block btnMios" type="submit">Logout</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

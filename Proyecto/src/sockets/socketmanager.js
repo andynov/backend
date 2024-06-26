@@ -1,7 +1,6 @@
 const socket = require("socket.io");
 const ProductRepository = require("../repositories/product.repository.js");
 const productRepository = new ProductRepository(); 
-const MessageModel = require("../models/message.model.js");
 
 class SocketManager {
     constructor(httpServer) {
@@ -25,12 +24,7 @@ class SocketManager {
                 this.emitUpdatedProducts(socket);
             });
 
-            socket.on("message", async (data) => {
-                await MessageModel.create(data);
-                const messages = await MessageModel.find();
-                socket.emit("message", messages);
             });
-        });
     }
 
     async emitUpdatedProducts(socket) {

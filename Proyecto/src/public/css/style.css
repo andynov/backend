@@ -70,7 +70,7 @@ nav li a:hover {
     font-family: "Kanit", sans-serif;
 }
 
-.login label, p{
+.login label, .login p{
     font-family: "Kanit-regular", sans-serif;
 }
 
@@ -80,6 +80,65 @@ nav li a:hover {
     font-family: "Kanit", sans-serif;
 }
 
-.register label, p{
+.register label, .register p{
     font-family: "Kanit-regular", sans-serif;
+}
+
+/* ----------------------------------- PROFILE  ---------------------------------------------*/
+
+.profile h1{
+    font-family: "Kanit", sans-serif;
+}
+
+.profile button, .profile a{
+    margin-left: 30%;
+    width: 30vh;
+    margin-bottom: 5px;
+}
+
+/* ----------------------------------- PRODUCTS  ---------------------------------------------*/
+
+
+
+.products .card {
+    margin-bottom: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.products .card-body{
+        flex: 1;
+}
+
+.products .card-img-top {
+    height: 410px;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+.products .btnMios {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.products .btnMios:hover {
+    background-color: #0056b3;
+}
+
+.products h1, .products h3, .products p {
+    font-family: "Kanit", sans-serif;
+}
+
+.products input {
+    text-align: center;
+}
+
+.products .price{
+    font-family: "Kanit", sans-serif;
+    font-weight: 700;
+    font-style: normal;
 }

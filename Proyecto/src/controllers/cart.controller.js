@@ -7,6 +7,8 @@ const productRepository = new ProductRepository();
 const { generateUniqueCode, calculateTotal } = require("../utils/cartutils.js");
 const EmailManager = require("../services/email.js");
 const emailManager = new EmailManager();
+const TicketRepository = require("../repositories/ticket.repository.js");
+const ticketRepository = new TicketRepository();
 
 class CartController {
     async newCart(req, res) {
@@ -34,14 +36,13 @@ class CartController {
     async addProductToCart(req, res) {
         const cartId = req.params.cid;
         const productId = req.params.pid;
-        const quantity = req.body.quantity || 1;
+        const quantity = parseInt(req.body.quantity) || 1;
         try {
-            await cartRepository.addProductToCart(cartId, productId, quantity);
-            const cartID = (req.user.cart).toString();
-            
-            res.redirect(`/carts/${cartID}`)
+            await cartRepository.addProduct(cartId, productId, quantity);
+            const cartIdRep = (req.user.cart).toString();
+            res.redirect(`/carts/${cartIdRep}`)
         } catch (error) {
-            res.status(500).send("Error");
+            res.status(500).send("Error adding product to cart");
         }
     }
 
@@ -65,7 +66,7 @@ class CartController {
         const updatedProducts = req.body;
 
         try {
-            const updatedCart = await cartRepository.updateProductCart(cartId, updatedProducts);
+            const updatedCart = await cartRepository.updateCart(cartId, updatedProducts);
             res.json(updatedCart);
         } catch (error) {
             res.status(500).send("Error");
@@ -127,16 +128,15 @@ class CartController {
 
             const userWithCart = await UserModel.findOne({ cart: cartId });
 
-            const ticket = new TicketModel({
+            const ticket = await ticketRepository.createTicket({
                 code: generateUniqueCode(),
                 purchase_datetime: new Date(),
                 amount: calculateTotal(cart.products),
-                purchaser: userWithCart._id
+                purchaser: userWithCart._id,
+                products: cart.products
             });
-            await ticket.save();
 
-            cart.products = cart.products.filter(item => productsUnavailables.some(productId => productId.equals(item.product)));
-            await cart.save();
+            await cartRepository.emptyCart(cartId);
 
             await emailManager.sendEmailPurchase(userWithCart.email, userWithCart.first_name, ticket._id);
             

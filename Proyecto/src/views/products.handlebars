@@ -1,25 +1,38 @@
-<h1> Products </h1>
+<script src="../public/js/productfunctions.js"></script>
 
-<p>Welcome, {{user.first_name}} {{user.last_name}}!</p>
-
-{{#each products}}
-<div>
-    <h2>{{title}}</h2>
-    <p>{{description}}</p>
-    <p>Price: ${{price}}</p>
-    <p>Category: {{category}} </p>
-    <form action="/api/carts/{{../cartId}}/product/{{_id}}" method="POST">
-    <button class="btnMios" type="submit"> Add to Cart </button>
-    </form>
+<div class="container mt-5 products">
+    <h1 class="text-center mb-4">Products</h1>
+    <div class="row">
+        {{#each products}}
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title">{{title}}</h5>
+                    <img class="card-img-top w-100" src="{{image}}" alt="{{title}}">
+                    <p class="card-text">{{description}}</p>
+                    <p class="card-text price">Price: ${{price}}</p>
+                    <form action="/api/carts/{{../cartId}}/product/{{id}}" method="POST">
+                        <div class="input-group mb-3">
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="decreaseQuantity(this)">-</button>
+                            <input type="number" class="form-control input-form" value="1" name="quantity" id="quantityInput"
+                                readonly>
+                            <button type="button" class="btn btn-outline-secondary"
+                                onclick="increaseQuantity(this)">+</button>
+                        </div>
+                        <button class="btnMios" type="submit">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="text-center mt-4">
+        {{#if hasNextPage}}
+        <a href="/products?page={{nextPage}}" class="btn btn-primary">Next</a>
+        {{/if}}
+        {{#if hasPrevPage}}
+        <a href="/products?page={{prevPage}}" class="btn btn-primary ml-2">Previous</a>
+        {{/if}}
+    </div>
+    <p class="text-center mt-3">Page {{currentPage}} of {{totalPages}}</p>
 </div>
-{{/each}}
-
-
-{{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}"> Next </a>
-{{/if}} 
-{{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}"> Previous </a>
-{{/if}}
-
-<p>Page {{currentPage}} of {{totalPages}} </p>

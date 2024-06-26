@@ -6,8 +6,7 @@ class ProductController {
     async addProduct(req, res) {
         const newProduct = req.body;
         try {
-            const result = await productRepository.addProduct(newProduct);
-            res.json(result);
+            await productRepository.addProduct(newProduct);
 
         } catch (error) {
             res.status(500).send("Error");
@@ -55,8 +54,9 @@ class ProductController {
 
     async deleteProduct(req, res) {
         const id = req.params.pid;
+        const user = req.user; 
         try {
-            let response = await productRepository.deleteProduct(id);
+            let response = await productRepository.deleteProduct(id, user);
 
             res.json(response);
         } catch (error) {

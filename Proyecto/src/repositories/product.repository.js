@@ -1,10 +1,8 @@
 const ProductModel = require("../models/product.model.js");
 
 class ProductRepository {
-    async addProduct(newObject) {
+    async addProduct({title, description, price, img, thumbnails, code, stock, category, owner}) {
         try{
-            const {title, description, price, img, thumbnails, code, stock, category} = newObject;
-
         if(!title || !description || !price || !code || !stock || !category){
             console.log("Complete all fields, please");
             return;
@@ -15,6 +13,8 @@ class ProductRepository {
             console.log("Don't repeat the code, please");
             return;
         }
+
+        console.log("Owner", owner);
 
         const newProduct = new ProductModel ({
             title,
@@ -39,7 +39,7 @@ class ProductRepository {
     }
     }
 
-    async getProducts( {limit = 10, page = 1, sort, query} = {}) {
+    async getProducts(limit = 10, page = 1, sort, query) {
         try {
             const skip = (page - 1) * limit;
 
@@ -127,9 +127,10 @@ class ProductRepository {
                 return null;
             }
             console.log("Product deleted succesfully");
+            return deleted;
         } catch (error) {
             console.log("Error deleting product", error);
-            throw error;
+            throw new Error("Error");
         }
     }
 }

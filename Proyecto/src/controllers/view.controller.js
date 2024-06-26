@@ -24,7 +24,7 @@ class ViewsController {
 
             const newArray = products.map(product => {
                 const { _id, ...rest } = product.toObject();
-                return { _id: _id, ...rest };
+                return { id: _id, ...rest };
             });
 
             
@@ -100,10 +100,6 @@ class ViewsController {
         }
     }
 
-    async renderChat(req, res) {
-        res.render("chat");
-    }
-
     async renderHome(req, res) {
         res.render("home");
     }
@@ -112,7 +108,7 @@ class ViewsController {
         res.render("passwordreset");
     }
 
-    async renderCambioPassword(req, res) {
+    async renderChangePassword(req, res) {
         res.render("passwordchange");
     }
 
