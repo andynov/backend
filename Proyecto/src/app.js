@@ -8,8 +8,6 @@ const initializePassport = require("./config/passport.config.js");
 const cors = require("cors");
 const path = require('path');
 require("./database.js");
-const dotenv = require("dotenv");
-dotenv.config();
 
 
 const userRouter = require("./routes/user.router.js");
