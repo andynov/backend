@@ -8,8 +8,9 @@ const initializePassport = require("./config/passport.config.js");
 const cors = require("cors");
 const path = require('path');
 require("./database.js");
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
+
 
 const userRouter = require("./routes/user.router.js");
 const productsRouter = require("./routes/products.router.js");
