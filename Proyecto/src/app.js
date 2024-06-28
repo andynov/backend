@@ -1,19 +1,20 @@
 const express = require("express");
 const app = express();
-const PUERTO = 8080;
+const PUERTO = process.env.PUERTO || 8080;
 const exphbs = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const initializePassport = require("./config/passport.config.js");
 const cors = require("cors");
 const path = require('path');
+require("./database.js");
 
 const userRouter = require("./routes/user.router.js");
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
 
-require("./database.js");
+
 
 
 // MIDDLEWARE

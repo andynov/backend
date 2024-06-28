@@ -40,6 +40,11 @@ nav li a:hover {
     color: #fafafa;
 }
 
+.cart-logo{
+    width: 20px;
+}
+
+
 /* -------------------------- HOME -------------------------------------------------- */
 
 .home-container h1 {
