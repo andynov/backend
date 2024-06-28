@@ -1,9 +1,12 @@
-<div>
-    <h1>Checkout</h1>
-    <p>Thanks for your purchase <span>{{client}}</span>! Number order: <span> {{numTicket}} </span> </p>
-    <p> We will send an email to <span> {{email}} </span> with the order information </p>
-     <div class="grupo-btn">
-        <a class="btnMios noSub" href="/products">E-commerce</a>
-        <a class="btnMios noSub" href="/api/users/profile">My Profile</a>
+<link rel="stylesheet" href="../public/css/style.css">
+
+<div class="container">
+    <h1 class="mt-5 checkout">Checkout</h1>
+    <p>Thanks for your purchase, <span>{{client}}</span>! Order number: <span>{{numTicket}}</span></p>
+    <p>We will send an email to <span>{{email}}</span> with the order information.</p>
+    <div class="btn-group mt-3" role="group" aria-label="Basic example">
+        <a class="btn btn-primary" href="/products">E-commerce</a>
+        <a class="btn btn-secondary" href="/api/users/profile">My Profile</a>
     </div>
 </div>
+

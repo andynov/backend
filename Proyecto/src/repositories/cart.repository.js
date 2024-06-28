@@ -27,7 +27,7 @@ class CartRepository {
         }
     }
 
-    async addProduct(cartId, productId, quantity = 1) {
+    async addProduct(cartId, productId, quantity) {
         try {
             const cart = await this.getProductsCart(cartId);
             const productExist = cart.products.find(item => item.product._id.toString() === productId);
